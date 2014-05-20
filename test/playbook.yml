@@ -20,3 +20,9 @@
       solr_local_config_file: '{{solr_local_dir}}/example/multicore/core1/conf/solrconfig.xml',
       solr_local_schema_file: '{{solr_local_dir}}/example/multicore/core1/conf/schema.xml'
     }
+  - { role: 'solr',
+      solr_action: 'install_core',
+      solr_core_name: 'core3',
+      solr_local_config_dir: '{{solr_local_dir}}/example/multicore/core0/',
+      solr_local_config_template: 'solrconfig.xml.j2'
+    }
