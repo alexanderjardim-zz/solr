@@ -1,0 +1,22 @@
+---
+
+- hosts: all
+  vars:
+    solr_installation_dir: '/home/vagrant/solr'
+  roles:
+  - { role: 'solr' }
+  - { role: 'solr',
+      solr_action: 'install_core',
+      solr_core_name: 'core0',
+      solr_local_config_dir: '{{solr_local_dir}}/example/multicore/core0/'
+    }
+  - { role: 'solr',
+      solr_action: 'install_core',
+      solr_core_name: 'core1'
+    }
+  - { role: 'solr',
+      solr_action: 'install_core',
+      solr_core_name: 'core2',
+      solr_local_config_file: '{{solr_local_dir}}/example/multicore/core1/conf/solrconfig.xml',
+      solr_local_schema_file: '{{solr_local_dir}}/example/multicore/core1/conf/schema.xml'
+    }

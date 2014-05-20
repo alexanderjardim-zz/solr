@@ -1,0 +1,9 @@
+---
+
+- include: install.yml
+  when: solr_action == 'install'
+  tags: [ 'solr', 'solr_install' ]
+
+- include: install_core.yml
+  when: solr_action == 'install_core'
+  tags: [ 'solr', 'solr_install_core' ]

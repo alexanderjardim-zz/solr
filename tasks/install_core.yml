@@ -1,0 +1,49 @@
+---
+
+- name: ensures Solr cores dirs exists
+  file:
+    path="{{solr_installation_dir}}/{{solr_core_name}}/{{item}}"
+    state=directory
+    mode=0755
+  with_items:
+    - conf
+    - data
+
+- name: ensures Solr cores dirs exists
+  file:
+    path="{{solr_data_dir}}"
+    state=directory
+    mode=0755
+  when: solr_core_data_dir is defined
+
+- name: ensures Solr core config dir is present at host
+  copy:
+    src="{{solr_local_config_dir}}/"
+    dest="{{solr_installation_dir}}/{{solr_core_name}}/"
+  when: solr_local_config_dir is defined
+
+- name: ensures Solr core local config file is present at host
+  copy:
+    src="{{solr_local_config_file}}"
+    dest="{{solr_installation_dir}}/{{solr_core_name}}/conf/solrconfig.xml"
+  when: solr_local_config_file is defined
+
+- name: ensures Solr core local schema file is present at host
+  copy:
+    src="{{solr_local_schema_file}}"
+    dest="{{solr_installation_dir}}/{{solr_core_name}}/conf/schema.xml"
+  when: solr_local_schema_file is defined
+
+- name: ensures Solr core config is built from template if none of the previous alternatives was used
+  template:
+    src="solrconfig.xml.j2"
+    dest="{{solr_installation_dir}}/{{solr_core_name}}/conf/solrconfig.xml"
+  when: 'solr_local_config_dir is not defined and solr_local_config_file is not defined'
+
+- name: ensures solr.xml has all cores registered
+  lineinfile:
+    dest="{{solr_installation_dir}}/solr.xml"
+    line='<core name="{{solr_core_name}}" instanceDir="{{solr_core_name}}" dataDir="{{solr_data_dir}}" />'
+    state='present'
+    insertafter='solr}">'
+    create=true

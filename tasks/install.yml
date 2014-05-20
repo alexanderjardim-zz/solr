@@ -1,0 +1,24 @@
+---
+
+- name: download Solr to hosts
+  local_action: >
+    get_url 
+      url="{{solr_download_url}}"
+      dest="{{solr_download_dir}}/{{solr_package}}"
+  tags: download
+
+- name: unpack Solr at control machine
+  local_action: >
+    unarchive
+      src="{{solr_download_dir}}/{{solr_package}}"
+      dest="{{solr_download_dir}}/"
+  tags: unpack
+
+- name: ensures solr.xml file is at {{solr_installation_dir}}
+  copy:
+    src="solr.xml"
+    dest="{{solr_installation_dir}}/"
+    mode=0644
+
+- include: tomcat.yml
+  when: solr_container == 'tomcat'

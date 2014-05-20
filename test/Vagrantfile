@@ -1,0 +1,32 @@
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.box = "ubuntu1204server"
+
+  # This box was found at http://www.vagrantbox.es/
+  config.vm.box_url = "http://goo.gl/8kWkm"
+
+  config.vm.provision "ansible" do |ansible|
+    ansible.playbook = "playbook.yml"
+    ansible.verbose = "vvvv"
+    ansible.groups = {
+      "dev" => ["master", "slave"],
+      "devM" => ["master"],
+      "devS" => ["slave"]  
+    }
+  end
+
+  config.vm.define "master" do |master|
+    master.vm.box = "master"
+    master.vm.network "private_network", ip: "172.20.20.20"
+    master.vm.network "forwarded_port", guest: 8080, host: 9090
+
+  end
+
+#  config.vm.define "slave" do |slave|
+#    slave.vm.box = "slave"
+#    slave.vm.network "private_network", ip: "172.20.20.21"
+#    slave.vm.network "forwarded_port", guest: 8080, host: 9191
+#  end 
+
+end  
