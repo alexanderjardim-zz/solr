@@ -19,7 +19,7 @@
 - name: ensures Solr core config dir is present at host
   copy:
     src="{{solr_local_config_dir}}/"
-    dest="{{solr_installation_dir}}/{{solr_core_name}}/"
+    dest="{{solr_installation_dir}}/{{solr_core_name}}/conf/"
   when: solr_local_config_dir is defined
 
 - name: ensures Solr core local config file is present at host
