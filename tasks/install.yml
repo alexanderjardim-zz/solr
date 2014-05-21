@@ -14,11 +14,30 @@
       dest="{{solr_download_dir}}/"
   tags: unpack
 
-- name: ensures solr.xml file is at {{solr_installation_dir}}
+- name: ensures solr.xml file is present at {{solr_installation_dir}}
   copy:
     src="solr.xml"
     dest="{{solr_installation_dir}}/"
     mode=0644
+
+- name: ensures {{solr_lib_dir}} is present at host machine
+  file:
+    path="{{solr_installation_dir}}/{{solr_lib_dir}}"
+    state=directory
+    mode=0700
+
+- name: ensures {{solr_local_libs}} are present at {{solr_lib_dir}} at host machine
+  copy:
+    src="{{item}}"
+    dest="{{solr_lib_dir}}/"
+  with_items: solr_local_libs
+  when: solr_local_libs is defined and solr_lib_dir is defined
+
+- name: ensures solr dist and external dependencies are present at host machine
+  copy:
+    src="{{solr_local_lib_dir}}"
+    dest="{{solr_installation_dir}}/{{solr_lib_dir}}"
+  when: solr_local_lib_dir is defined
 
 - include: tomcat.yml
   when: solr_container == 'tomcat'

@@ -4,15 +4,22 @@
   vars:
     solr_installation_dir: '/home/vagrant/solr'
   roles:
-  - { role: 'solr' }
   - { role: 'solr',
-      solr_action: 'install_core',
-      solr_core_name: 'core0',
-      solr_local_config_dir: '{{solr_local_dir}}/example/multicore/core0/'
+      solr_local_libs: [
+                        '{{solr_local_dir}}/dist/solr-dataimporthandler-4.4.0.jar',
+                        '{{solr_local_dir}}/dist/solr-dataimporthandler-extras-4.4.0.jar'
+                        ]
     }
   - { role: 'solr',
       solr_action: 'install_core',
-      solr_core_name: 'core1'
+      solr_core_name: 'core0',
+      solr_local_config_dir: '{{solr_local_dir}}/example/multicore/core0/conf/'
+    }
+  - { role: 'solr',
+      solr_action: 'install_core',
+      solr_core_name: 'core1',
+      solr_local_schema_file: '{{solr_local_dir}}/example/multicore/core1/conf/schema.xml',
+      solr_local_config_template: 'solrconfig.xml.j2'
     }
   - { role: 'solr',
       solr_action: 'install_core',
@@ -23,6 +30,5 @@
   - { role: 'solr',
       solr_action: 'install_core',
       solr_core_name: 'core3',
-      solr_local_config_dir: '{{solr_local_dir}}/example/multicore/core0/',
-      solr_local_config_template: 'solrconfig.xml.j2'
+      solr_local_config_dir: '{{solr_local_dir}}/example/example-DIH/solr/solr/conf/'
     }

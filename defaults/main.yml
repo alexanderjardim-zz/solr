@@ -86,8 +86,8 @@ solr_log_level: INFO
 ################
 # DEPENDENCIES #
 ################
-# here, you list the folders you use to import dependency libs for solr
-solr_lib_dirs: ['../lib', '../deps']
+# here, you list the folder you use to import dependency libs for solr
+solr_lib_dir: '{{solr_installation_dir}}/lib'
 
 #here, you list jar files you want to include on your classpath
 #solr_lib_paths: ['/path/to/some_lib.jar']
