@@ -22,7 +22,7 @@
 
 - name: ensures {{solr_lib_dir}} is present at host machine
   file:
-    path="{{solr_installation_dir}}/{{solr_lib_dir}}"
+    path="{{solr_lib_dir}}"
     state=directory
     mode=0700
 
