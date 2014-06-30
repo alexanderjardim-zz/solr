@@ -627,14 +627,16 @@
     <!-- QuerySenderListener takes an array of NamedList and executes a
          local query request for each NamedList in sequence. 
       -->
+    {% if solr_newsearcher_query is defined %}
     <listener event="newSearcher" class="solr.QuerySenderListener">
       <arr name="queries">
         <lst>
-          <str name="q">itemId:0</str>
+          <str name="q">{{solr_newsearcher_query}}</str>
         </lst>
       </arr>
     </listener>
-     {% if solr_post_commit_exe is defined %}
+    {% endif %}
+    {% if solr_post_commit_exe is defined %}
     <listener event="newSearcher" class="solr.RunExecutableListener">
       <str name="exe">{{solr_post_commit_exe}}</str>
       <str name="dir">{{solr_post_commit_dir}}</str>
@@ -652,13 +654,15 @@
     </listener>
     {% endif %}
 
+    {% if solr_firstsearcher_query is defined %}
     <listener event="firstSearcher" class="solr.QuerySenderListener">
       <arr name="queries">
         <lst>
-          <str name="q">itemId:0</str>
+          <str name="q">{{solr_firstsearcher_query}}</str>
         </lst>
       </arr>
     </listener>
+    {% endif %}
 
     <!-- Use Cold Searcher
 
