@@ -9,11 +9,11 @@ solr_version: 4.4.0
 solr_package: 'solr-{{solr_version}}.tgz'
 
 # here, you put the value that would go at -Dsolr.solr.home
-solr_installation_dir: '~/solr'
+solr_installation_dir: '{{ lookup("env","HOME") }}/solr'
 
 #everything that will be downloaded will go here, so we don't need to download the same package over and over at each guest machine.
 #what about this default? I am a Mac user. What may I say?
-solr_download_dir: '~/Downloads'
+solr_download_dir: '{{ lookup("env","HOME") }}/Downloads'
 solr_local_dir: '{{solr_download_dir}}/solr-{{solr_version}}'
 
 solr_log_level: 'INFO'
@@ -24,8 +24,7 @@ solr_data_dir: '{{solr_installation_dir}}/{{solr_core_name}}/data'
 # CONTAINER #
 #############
 
-#this is the only container we support right now
-solr_container: 'tomcat'
+solr_container: 'jetty'
 
 ##########
 # COMMIT #
@@ -127,3 +126,13 @@ solr_query_result_cache_auto_warm_count: 0
 solr_document_cache_size: 512
 solr_document_cache_intial_size: 512
 solr_document_cache_auto_warm_count: 0
+
+###########
+# LOGGING #
+###########
+solr_log_dir: "{{solr_installation_dir}}/logs"
+solr_log_max_file_size: '40MB'
+solr_log_max_backup_index: 10
+
+solr_java_opts: '-server -Djava.awt.headless=true'
+solr_port: 8080

@@ -117,6 +117,7 @@ galaxy_info:
   - system
   - web
 dependencies:
+  - { role: "alexanderjardim.oracle_jdk", tags: 'jdk' }
   - { role: "alexanderjardim.tomcat", when: solr_container == 'tomcat', tags: 'tomcat' }
   # List your role dependencies here, one per line. Only
   # dependencies available via galaxy should be listed here.

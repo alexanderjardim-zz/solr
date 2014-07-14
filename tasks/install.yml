@@ -39,5 +39,8 @@
     dest="{{solr_installation_dir}}/{{solr_lib_dir}}"
   when: solr_local_lib_dir is defined
 
+- include: jetty.yml
+  when: solr_container == 'jetty'
+
 - include: tomcat.yml
   when: solr_container == 'tomcat'
