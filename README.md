@@ -20,7 +20,8 @@ Role Variables
 - **solr_local_dir**: path where solr package will be unpackaged at the control machine. Defaults to *'{{solr_download_dir}}/solr-{{solr_version}}'*
 - **solr_log_level**: level which solr will log. Defauls to *'INFO'*
 - **solr_download_url**: from which url solr package will be downloaded . Defaults to *'https://archive.apache.org/dist/lucene/solr/{{solr_version}}/{{solr_package}}'*
-- **solr_container**: web application container that solr.war will be deployed. At this moment, only supports tomcat. Defaults to *'tomcat'*
+- **solr_container**: web application container that solr.war will be deployed. Supports tomcat or jetty (embedded version distributed with solr) . Defaults to *'jetty'*
+- **solr_port**: http port where solr will respond requests. Defaults to *8080*
 
 ####Core specific variables
 
