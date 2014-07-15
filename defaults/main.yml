@@ -9,11 +9,11 @@ solr_version: 4.4.0
 solr_package: 'solr-{{solr_version}}.tgz'
 
 # here, you put the value that would go at -Dsolr.solr.home
-solr_installation_dir: '{{ lookup("env","HOME") }}/solr'
+solr_installation_dir: '/home/vagrant/solr'
 
 #everything that will be downloaded will go here, so we don't need to download the same package over and over at each guest machine.
 #what about this default? I am a Mac user. What may I say?
-solr_download_dir: '{{ lookup("env","HOME") }}/Downloads'
+solr_download_dir: '/home/vagrant/Downloads'
 solr_local_dir: '{{solr_download_dir}}/solr-{{solr_version}}'
 
 solr_log_level: 'INFO'
