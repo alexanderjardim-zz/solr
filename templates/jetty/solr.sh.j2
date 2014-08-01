@@ -1,11 +1,18 @@
 #!/bin/bash
 
+OLD_DIR=`pwd`
+
+cd {{solr_installation_dir}}
+
 JAVA_OPTS="{{solr_java_opts}} $JAVA_OPTS"
 
-pid=`ps -ef | grep '8080' | grep -v grep | tr -s ' ' | cut -d ' ' -f2`
+pid=`ps -ef | grep 'port={{solr_port}}' | grep -v grep | tr -s ' ' | cut -d ' ' -f2`
+
 
 if [ -n "$pid" ]; then
 	kill -9 $pid
 fi 
 
 nohup java -Djetty.port="{{solr_port}}" -Dsolr.solr.home="{{solr_installation_dir}}" $JAVA_OPTS -jar {{solr_installation_dir}}/start.jar >/dev/null 2>&1 &
+
+cd $OLD_DIR
