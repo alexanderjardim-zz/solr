@@ -53,7 +53,9 @@ solr_lock_type: native
 # REPLICATION #
 ###############
 
-# master, slave, repeater or disabled
+# master, slave, cloud or disabled
+# it is strange to setup solr_replication_mode to cloud, but you shouldn't setup a node as replicated and cloud
+# so it seems good to use the same variable for both
 solr_replication_mode: 'disabled'
 
 #there isn't a good default value for the master url, and you must configure it for your slave instances
@@ -65,10 +67,16 @@ solr_replication_poll_interval: '00:01:00'
 #config files wich solr master will replicate to slaves
 solr_replication_config_files: 'schema.xml'
 
-
-
-#here, you should list the name of your cores
-solr_core_names: ['collection1', 'collection2']
+#########
+# CLOUD #
+#########
+# true or false
+solr_cloud_zookeeper_embedded: false
+# comma separated list of zookeeper hosts
+#solr_cloud_zookeeper_host: none
+#solr_cloud_num_shards: 2
+#solr_cloud_collection_boostrap_dir: './solr/collection1/conf'
+#solr_cloud_collection_config_name: myconf
 
 solr_log_level: INFO
 
@@ -135,4 +143,4 @@ solr_log_max_file_size: '40MB'
 solr_log_max_backup_index: 10
 
 solr_java_opts: '-server -Djava.awt.headless=true'
-solr_port: 8080
+solr_port: 8983

@@ -4,6 +4,15 @@ OLD_DIR=`pwd`
 
 cd {{solr_installation_dir}}
 
+{% if solr_replication_mode == 'cloud' and solr_cloud_zookeeper_embedded != true %}
+JAVA_OPTS="-DzkHost={{solr_cloud_zookeeper_host}} $JAVA_OPTS"
+{% endif %}
+{% if solr_replication_mode == 'cloud' and solr_cloud_num_shards is defined %}
+JAVA_OPTS="-DnumShards={{solr_cloud_num_shards}} $JAVA_OPTS"
+{% endif %}
+{% if solr_replication_mode == 'cloud' and solr_cloud_zookeeper_embedded == true %}
+JAVA_OPTS="-DzkRun $JAVA_OPTS"
+{% endif %}
 JAVA_OPTS="{{solr_java_opts}} $JAVA_OPTS"
 
 pid=`ps -ef | grep 'port={{solr_port}}' | grep -v grep | tr -s ' ' | cut -d ' ' -f2`
