@@ -5,7 +5,7 @@ solr_action: install
 ###########
 # VERSION #
 ###########
-solr_version: 4.4.0
+solr_version: 4.9.0
 solr_package: 'solr-{{solr_version}}.tgz'
 
 # here, you put the value that would go at -Dsolr.solr.home

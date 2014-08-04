@@ -1,0 +1,83 @@
+---
+
+- hosts: all
+  vars:
+    solr_replication_mode: 'cloud'
+    solr_version: '4.9.0'
+    solr_cloud_num_shards: 2
+  roles:
+    # first node
+    - { role: 'solr',
+        solr_installation_dir: '/home/vagrant/solr/8983',
+        solr_cloud_collection_boostrap_dir: '/home/vagrant/solr/8983/collection1/conf',
+        solr_cloud_zookeeper_host: 'localhost:2181',
+        solr_cloud_collection_config_name: collection1,
+        solr_port: '8983'
+      }
+    - { role: 'solr',
+        solr_action: 'install_core',
+        solr_core_name: 'collection1',
+        solr_installation_dir: '/home/vagrant/solr/8983',
+        solr_local_config_dir: '{{solr_local_dir}}/example/solr/collection1/conf/'
+      }
+    - { role: 'solr',
+        solr_action: 'install_core',
+        solr_core_name: 'collection2',
+        solr_installation_dir: '/home/vagrant/solr/8983',
+        solr_local_config_dir: '{{solr_local_dir}}/example/solr/collection1/conf/'
+      }
+    #second node
+    - { role: 'solr',
+        solr_cloud_zookeeper_host: 'localhost:2181',
+        solr_installation_dir: '/home/vagrant/solr/7983',
+        solr_port: '7983'
+      }
+    - { role: 'solr',
+        solr_action: 'install_core',
+        solr_core_name: 'collection1',
+        solr_installation_dir: '/home/vagrant/solr/7983',
+        solr_local_config_dir: '{{solr_local_dir}}/example/solr/collection1/conf/'
+      }
+    - { role: 'solr',
+        solr_action: 'install_core',
+        solr_core_name: 'collection2',
+        solr_installation_dir: '/home/vagrant/solr/7983',
+        solr_local_config_dir: '{{solr_local_dir}}/example/solr/collection1/conf/'
+      }
+    #third node
+    - { role: 'solr',
+        solr_cloud_zookeeper_host: 'localhost:2181',
+        solr_installation_dir: '/home/vagrant/solr/6983',
+        solr_port: '6983'
+      }
+    - { role: 'solr',
+        solr_action: 'install_core',
+        solr_core_name: 'collection1',
+        solr_installation_dir: '/home/vagrant/solr/6983',
+        solr_local_config_dir: '{{solr_local_dir}}/example/solr/collection1/conf/'
+      }
+    - { role: 'solr',
+        solr_action: 'install_core',
+        solr_core_name: 'collection2',
+        solr_installation_dir: '/home/vagrant/solr/6983',
+        solr_local_config_dir: '{{solr_local_dir}}/example/solr/collection1/conf/'
+      }
+#    - { role: 'solr',
+#        solr_cloud_zookeeper_host: 'localhost:9983',
+#        solr_installation_dir: '/home/vagrant/solr/7983',
+#        solr_port: '7983'
+#      }
+
+#    - { role: 'solr',
+#        solr_action: 'install_core',
+#        solr_core_name: 'core1',
+#        solr_installation_dir: '/home/vagrant/solr/8983',
+#        solr_local_config_dir: '{{solr_local_dir}}/example/multicore/core0/conf/'
+#      }
+
+#    - { role: 'solr',
+#        solr_action: 'install_core',
+#        solr_core_name: 'core1',
+#        solr_installation_dir: '/home/vagrant/solr/8982',
+#        solr_local_config_dir: '{{solr_local_dir}}/example/multicore/core0/conf/'
+#      }
