@@ -2,16 +2,12 @@
 
 - name: action | install | download Solr to hosts
   local_action: >
-    get_url 
-      url="{{solr_download_url}}"
-      dest="{{solr_download_dir}}/{{solr_package}}"
+    get_url url="{{solr_download_url}}" dest="{{solr_download_dir}}/{{solr_package}}"
   tags: download
 
 - name: action | install | unpack Solr at control machine
   local_action: >
-    unarchive
-      src="{{solr_download_dir}}/{{solr_package}}"
-      dest="{{solr_download_dir}}/"
+    unarchive src="{{solr_download_dir}}/{{solr_package}}" dest="{{solr_download_dir}}/"
   tags: unpack
 
 - name: action | install | ensures solr.xml file is present at {{solr_installation_dir}}
